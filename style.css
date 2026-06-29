@@ -1,0 +1,271 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url("assets/background.jpg") center center / cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Главное окно */
+#game {
+    background: rgba(255, 255, 255, 0.35);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 18px;
+    padding: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Верхняя панель */
+#topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    background: rgba(255,255,255,0.4);
+    padding: 8px;
+    border-radius: 12px;
+}
+
+/* Счётчики */
+#mineCounter, #timer {
+    font-weight: bold;
+    color: #003b5c;
+}
+
+/* Смайлик-кнопка */
+#faceButton {
+    font-size: 20px;
+    padding: 6px 10px;
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,0.7);
+    background: linear-gradient(to bottom, #ffffff, #bfe9ff);
+    cursor: pointer;
+
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
+}
+
+#faceButton:active {
+    transform: scale(0.95);
+}
+
+/* Игровое поле */
+#board {
+    display: grid;
+    grid-template-columns: repeat(9, 32px);
+    grid-template-rows: repeat(9, 32px);
+    gap: 2px;
+    justify-content: center;
+
+    padding: 8px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+}
+
+/* Клетки */
+.cell {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+
+    background: linear-gradient(to bottom, #dff6ff, #a8dcff);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 6px;
+
+    cursor: pointer;
+    user-select: none;
+    transition: 0.1s;
+}
+
+/* Открытая клетка */
+.cell.open {
+    background: rgba(255,255,255,0.8);
+}
+
+/* Мина */
+.cell.mine {
+    background: #ff6b6b;
+    color: white;
+}
+.cell {
+    transition: transform 0.08s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 👆 нажатие */
+.cell:active {
+    transform: scale(0.92);
+}
+
+/* 🟦 открытие клетки (Vista fade-in) */
+.cell.open {
+    animation: openCell 0.18s ease-out;
+}
+
+@keyframes openCell {
+    from {
+        transform: scale(0.7);
+        opacity: 0.3;
+        filter: brightness(1.3);
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
+
+/* 💎 мягкое свечение при открытии числа */
+.cell.open:not(.mine) {
+    box-shadow: inset 0 0 6px rgba(255,255,255,0.6);
+}
+
+/* 💣 взрывная клетка */
+.cell.mine {
+    animation: boomCell 0.25s ease-out;
+}
+
+@keyframes boomCell {
+    0% {
+        transform: scale(1);
+        background: #ffb3b3;
+    }
+    50% {
+        transform: scale(1.2);
+        background: #ff4d4d;
+    }
+    100% {
+        transform: scale(1);
+        background: #ff6b6b;
+    }
+}
+
+/* 🚩 флажок — лёгкий pop */
+.cell {
+    will-change: transform;
+}
+
+.cell.flag-pop {
+    animation: flagPop 0.15s ease-out;
+}
+
+@keyframes flagPop {
+    0% { transform: scale(0.6); }
+    100% { transform: scale(1); }
+}
+/* ===== Взрыв мин ===== */
+
+.cell.mine {
+    animation: mineBoom 0.35s ease-out;
+}
+
+@keyframes mineBoom {
+
+    0% {
+        transform: scale(0.2) rotate(-90deg);
+        opacity: 0;
+        filter: brightness(2);
+    }
+
+    50% {
+        transform: scale(1.3) rotate(10deg);
+        filter: brightness(1.8);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        filter: brightness(1);
+    }
+
+}
+/* ========================= */
+/*        Night Mode         */
+/* ========================= */
+
+body.dark {
+    background: linear-gradient(
+        180deg,
+        #1b2433,
+        #111827,
+        #090b11
+    );
+}
+
+body.dark #game {
+    background: rgba(30, 35, 45, 0.55);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+body.dark #topBar {
+    background: rgba(255,255,255,0.08);
+}
+
+body.dark .cell {
+    background: linear-gradient(
+        to bottom,
+        #4c566a,
+        #2e3440
+    );
+
+    color: white;
+}
+
+body.dark .cell.open {
+    background: linear-gradient(
+        to bottom,
+        #2e3440,
+        #1f2530
+    );
+}
+
+body.dark #faceButton,
+body.dark #difficulty,
+body.dark #themeButton {
+
+    background: linear-gradient(
+        to bottom,
+        #5d6a7d,
+        #394454
+    );
+
+    color: white;
+}
+
+#themeButton {
+
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+
+    border-radius: 10px;
+    border: none;
+
+    cursor: pointer;
+
+    font-weight: bold;
+    #difficulty {
+    color: #002b45;
+    background: linear-gradient(to bottom, #ffffff, #cfefff);
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-weight: bold;
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.9),
+        0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+#difficulty option {
+    color: black; /* чтобы в списке тоже было видно */
+}
+}

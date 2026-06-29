@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinePazz</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="game">
+
+        <!-- Верхняя панель -->
+        <div id="topBar">
+
+            <div id="mineCounter">
+                💣 010
+            </div>
+
+            <button id="faceButton">
+                : )
+            </button>
+
+            <div id="timer">
+                ⏱️ 000
+            </div>
+
+        </div>
+
+        <!-- Выбор сложности -->
+        <select id="difficulty">
+            <option value="easy"> :D Easy (9×9, 10 мин)</option>
+            <option value="medium"> B] Medium (12×12, 20 мин)</option>
+            <option value="hard">X_X Hard (16×16, 40 мин)</option>
+        </select>
+<button id="themeButton">dark theme🌙</button>
+
+        <!-- Игровое поле -->
+        <div id="board"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
